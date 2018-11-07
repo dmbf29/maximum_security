@@ -1,0 +1,42 @@
+<div class="banner" style="background-image: linear-gradient(-225deg, rgba(0,101,168,0.6) 0%, rgba(0,36,61,0.6) 50%), url(<%= @prison.banner_url %>);">
+  <div class="banner-content">
+    <h1><%= @prison.name %></h1>
+    <p>Learn to code with us</p>
+    <a class="btn btn-primary btn-lg">Add Criminal</a>
+  </div>
+</div>
+
+<div class="contain">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <%= simple_form_for [@prison, @criminal] do |f| %>
+        <%= f.input :name %>
+        <%= f.input :specialty, collection: Criminal::SPECIALTIES %>
+        <%= f.input :picture_url %>
+        <%= f.submit "Add criminal", class: "btn btn-danger" %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+      <% @prison.criminals.each do |criminal| %>
+      <div class="col-sm-3">
+        <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= criminal.picture_url %>);">
+        <div class="card-category">Popular</div>
+        <div class="card-description">
+          <h2><%= criminal.name %></h2>
+          <p><%= criminal.specialty %></p>
+        </div>
+        <!-- <img class="card-user" src="https://kitt.lewagon.com/placeholder/users/tgenaitay"> -->
+        <%= link_to criminal_path(criminal), class: "card-link" ,method: :delete do %>
+          <i class="fa fa-bolt" style="color:yellow" aria-hidden="true"></i>
+        <% end %>
+      </div>
+      </div>
+      <% end %>
+  </div>
+</div>
+
+
+<%#= link_to 'Edit', edit_prison_path(@prison) %> |
+<%#= link_to 'Back', prisons_path %>
