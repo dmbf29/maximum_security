@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <h3>Add Tag to <%= @criminal.name %></h3>
+      <%= simple_form_for [@criminal, @criminal_tag] do |f| %>
+        <%= f.association :tag, input_html: {multiple: true} %>
+        <%= f.submit "Create Tag", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+</div>

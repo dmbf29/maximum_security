@@ -2,33 +2,28 @@
   <div class="banner-content">
     <h1><%= @prison.name %></h1>
     <p>Learn to code with us</p>
-    <a class="btn btn-primary btn-lg">Add Criminal</a>
+    <a href="#new_criminal" class="btn btn-primary btn-lg">Add Criminal</a>
   </div>
 </div>
 
-<div class="contain">
-  <div class="row">
-    <div class="col-sm-6 col-sm-offset-3">
-      <%= simple_form_for [@prison, @criminal] do |f| %>
-        <%= f.input :name %>
-        <%= f.input :specialty, collection: Criminal::SPECIALTIES %>
-        <%= f.input :picture_url %>
-        <%= f.submit "Add criminal", class: "btn btn-danger" %>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="row">
+<div class="container">
+  <div class="row criminals-row">
       <% @prison.criminals.each do |criminal| %>
-      <div class="col-sm-3">
+      <div class="col-sm-4">
         <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= criminal.picture_url %>);">
-        <div class="card-category">Popular</div>
+        <div class="card-tags">
+          <% criminal.tags.each do |tag| %>
+            <span><%= tag.name %></span>
+          <% end %>
+          <%= link_to new_criminal_criminal_tag_path(criminal) do %>
+            <i class="fa fa-plus" style="color:white" aria-hidden="true"></i>
+          <% end %>
+        </div>
         <div class="card-description">
           <h2><%= criminal.name %></h2>
-          <p><%= criminal.specialty %></p>
         </div>
         <!-- <img class="card-user" src="https://kitt.lewagon.com/placeholder/users/tgenaitay"> -->
-        <%= link_to criminal_path(criminal), class: "card-link" ,method: :delete do %>
+        <%= link_to criminal_path(criminal), class: "card-remove-link" ,method: :delete, data: { confirm: "Execute this criminal?" } do %>
           <i class="fa fa-bolt" style="color:yellow" aria-hidden="true"></i>
         <% end %>
       </div>
@@ -37,6 +32,16 @@
   </div>
 </div>
 
+<div class="container add-criminal-wrapper">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <h4 style="text-align: center">Add a criminal</h4>
+      <%= simple_form_for [@prison, @criminal] do |f| %>
+        <%= f.input :name %>
+        <%= f.input :picture_url %>
+        <%= f.submit "Add criminal", class: "btn btn-danger" %>
+      <% end %>
+    </div>
+  </div>
+</div>
 
-<%#= link_to 'Edit', edit_prison_path(@prison) %> |
-<%#= link_to 'Back', prisons_path %>

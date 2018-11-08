@@ -1,0 +1,2 @@
+module CriminalTagsHelper
+end
